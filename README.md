@@ -14,13 +14,13 @@ It follows a structured user flow starting from a landing page, moving through l
 
 ---
 
-## 🔄 Project Flow
+##  Project Flow
 
 First Page → Login Page → Main Page → Feature Pages
 
 ---
 
-## 📁 Key Files
+##  Key Files
 
 - first_page.html → Landing / Starting Page  
 - login_page.html → Login Page  
@@ -28,7 +28,7 @@ First Page → Login Page → Main Page → Feature Pages
 
 ---
 
-## ⚙️ Features
+##  Features
 
 - Multi-page navigation  
 - Structured user flow (Landing → Login → Dashboard)  
@@ -38,7 +38,7 @@ First Page → Login Page → Main Page → Feature Pages
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 - HTML  
 - CSS  
@@ -46,7 +46,7 @@ First Page → Login Page → Main Page → Feature Pages
 
 ---
 
-## ⚠️ Note
+##  Note
 
 - Start the project by opening **first_page.html**  
 - Login is frontend-based (no backend validation required)  
