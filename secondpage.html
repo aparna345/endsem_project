@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zen Features</title>
+
+<style>
+body {
+    font-family: Poppins;
+    background: url("bg.jpg") no-repeat center/cover;
+    padding: 20px;
+}
+
+/* SECTION */
+.section {
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+/* HIGHLIGHT */
+.active {
+    border: 3px solid #2a9d8f;
+}
+
+/* JOURNAL */
+textarea {
+    width: 100%;
+    height: 80px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    background: #2a9d8f;
+    color: white;
+    border-radius: 8px;
+}
+
+.entry {
+    background: #eee;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MOOD REPORT -->
+<div id="mood" class="section">
+    <h2>📊 Mood Report</h2>
+    <button onclick="showMoods()">Show Moods</button>
+    <div id="moodList"></div>
+</div>
+
+<!-- MEDITATION -->
+<div id="meditation" class="section">
+    <h2>🧘 Meditation</h2>
+    <p id="timer">0 sec</p>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+</div>
+
+<!-- JOURNAL -->
+<div id="journal" class="section">
+    <h2>📒 Journal</h2>
+    <textarea id="text"></textarea>
+    <button onclick="saveJournal()">Save</button>
+    <button onclick="loadJournal()">View</button>
+    <div id="entries"></div>
+</div>
+
+<!-- COMMUNITY -->
+<div id="community" class="section">
+    <h2>👥 Community</h2>
+    <p>💬 Stay strong 🌿</p>
+    <p>💬 You got this 💪</p>
+</div>
+
+<script>
+
+/* HIGHLIGHT SECTION BASED ON CLICK */
+let params = new URLSearchParams(window.location.search);
+let section = params.get("section");
+
+if(section){
+    document.getElementById(section).classList.add("active");
+    document.getElementById(section).scrollIntoView();
+}
+
+/* MOODS */
+function showMoods(){
+    let moods = JSON.parse(localStorage.getItem("moods")) || [];
+    let out = "";
+    moods.forEach(m => out += "<div class='entry'>" + m + "</div>");
+    document.getElementById("moodList").innerHTML = out;
+}
+
+/* JOURNAL */
+function saveJournal(){
+    let text = document.getElementById("text").value;
+    let data = JSON.parse(localStorage.getItem("journal")) || [];
+    data.push(text);
+    localStorage.setItem("journal", JSON.stringify(data));
+    alert("Saved!");
+}
+
+function loadJournal(){
+    let data = JSON.parse(localStorage.getItem("journal")) || [];
+    let out = "";
+    data.forEach(e => out += "<div class='entry'>" + e + "</div>");
+    document.getElementById("entries").innerHTML = out;
+}
+
+/* TIMER */
+let time = 0, interval;
+
+function startTimer(){
+    interval = setInterval(()=>{
+        time++;
+        document.getElementById("timer").innerText = time + " sec";
+    },1000);
+}
+
+function stopTimer(){
+    clearInterval(interval);
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Journal</title>
+
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+body {
+  height: 100vh;
+  margin: 0;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
+    url("background.jpeg") no-repeat;
+
+  background-size: cover;          /* full screen */
+  background-position: right bottom; /* 👈 shows LOWER part (your quote) */
+
+  display: flex;
+  align-items: center;
+}
+
+/* JOURNAL BOX (LEFT SIDE) */
+.journal-card {
+  width: 800px;              /* 👈 BIG width */
+  min-height: 550px;         /* 👈 taller box */
+  
+  margin-left: 70px;         /* keep it left */
+  padding: 50px;
+
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(30px);
+  border-radius: 25px;
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+}
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  color: white;
+}
+
+.status {
+  font-size: 14px;
+  color: lightgreen;
+}
+
+/* TITLE */
+.title {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+/* TEXTAREA */
+textarea {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  resize: none;
+  outline: none;
+}
+
+/* BUTTONS */
+.actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save {
+  background: #00c9a7;
+  color: white;
+}
+
+.clear {
+  background: #ff6b6b;
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* ENTRIES */
+.entries {
+  margin-top: 15px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.entry {
+  background: rgba(255,255,255,0.2);
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  color: white;
+  font-size: 13px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="journal-card">
+
+  <div class="header">
+    <h1>Journal ✍️</h1>
+    <span id="status" class="status">● Not Saved</span>
+  </div>
+
+  <input id="title" class="title" placeholder="Title...">
+
+  <textarea id="text" placeholder="Write your thoughts..."></textarea>
+
+  <div class="actions">
+    <button class="save" onclick="saveEntry()">Save</button>
+    <button class="clear" onclick="clearText()">Clear</button>
+  </div>
+
+  <div class="entries" id="list"></div>
+
+</div>
+
+<script>
+function saveEntry(){
+  let title = document.getElementById("title").value;
+  let text = document.getElementById("text").value;
+
+  if(text.trim() === "") return;
+
+  let data = JSON.parse(localStorage.getItem("journal3")) || [];
+
+  data.push({ title, text });
+
+  localStorage.setItem("journal3", JSON.stringify(data));
+
+  status.innerText = "● Saved";
+  display();
+}
+
+function clearText(){
+  title.value = "";
+  text.value = "";
+}
+
+function display(){
+  let data = JSON.parse(localStorage.getItem("journal3")) || [];
+  list.innerHTML = "";
+
+  data.slice(-5).reverse().forEach(e=>{
+    let div = document.createElement("div");
+    div.className = "entry";
+    div.innerHTML = `<strong>${e.title || "Untitled"}</strong><br>${e.text.substring(0,30)}...`;
+    list.appendChild(div);
+  });
+}
+
+text.addEventListener("input", ()=>{
+  status.innerText = "● Typing...";
+});
+
+display();
+</script>
+
+</body>
+</html>

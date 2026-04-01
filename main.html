@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zen Dashboard</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* BACKGROUND */
+body {
+    height: 100vh;
+    background: url("bg2.jpg") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+/* CENTER */
+.container {
+    text-align: center;
+    width: 350px;
+    z-index: 2;
+}
+
+/* TITLE */
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #3f4436;
+}
+
+/* EMOJIS */
+.emojis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    margin: 20px 0;
+}
+
+.emoji {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emoji:hover {
+    transform: scale(1.3);
+}
+
+/* ICONS LAYER */
+.icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ICON */
+.icon {
+    position: absolute;
+    font-size: 60px;
+    cursor: pointer;
+    transition: 0.3s;
+    pointer-events: auto;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+/* LOGO */
+.logo-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* POSITIONS */
+.icon-top-left { top: 20px; left: 20px; }
+.icon-top-right { top: 20px; right: 20px; }
+.icon-bottom-left { bottom: 20px; left: 20px; }
+.icon-bottom-right { bottom: 20px; right: 20px; }
+
+</style>
+</head>
+
+<body>
+
+<!-- ICONS -->
+<div class="icons">
+
+    <!-- LOGO (now top-left) -->
+    <div class="icon icon-top-left logo-icon" onclick="goHome()">
+        <img src="logo.png" alt="logo">
+    </div>
+
+    <!-- Meditation -->
+    <div class="icon icon-top-right" onclick="openFeature('meditation')">🧘</div>
+
+    <!-- REPORT (moved to bottom-left) -->
+    <div class="icon icon-bottom-left" onclick="openFeature('mood')">📊</div>
+
+    <!-- Journal -->
+    <div class="icon icon-bottom-right" onclick="openFeature('journal')">📒</div>
+
+</div>
+
+<!-- CENTER -->
+<div class="container">
+    <h2>What’s your mood?</h2>
+
+    <div class="emojis">
+        <span class="emoji" onclick="selectMood('happy')">😊</span>
+        <span class="emoji" onclick="selectMood('excited')">😁</span>
+        <span class="emoji" onclick="selectMood('neutral')">😐</span>
+        <span class="emoji" onclick="selectMood('sad')">😣</span>
+        <span class="emoji" onclick="selectMood('crying')">😭</span>
+    </div>
+</div>
+
+<script>
+
+/* SAVE MOOD */
+function selectMood(mood) {
+    let moods = JSON.parse(localStorage.getItem("moods")) || [];
+    moods.push(mood);
+    localStorage.setItem("moods", JSON.stringify(moods));
+
+    alert("Mood saved: " + mood);
+}
+
+/* NAVIGATION */
+function openFeature(feature) {
+
+    document.body.style.opacity = "0";
+
+    setTimeout(() => {
+
+        if(feature === "mood"){
+            window.location.href = "mood.html";
+        } 
+        else if(feature === "meditation"){
+            window.location.href = "meditation.html";
+        } 
+        else if(feature === "journal"){
+            window.location.href = "journalling.html";
+        }
+
+    }, 300);
+}
+
+/* LOGO CLICK → stays on same page */
+function goHome() {
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+        window.location.href = "main.html"; 
+    }, 300);
+}
+
+</script>
+
+</body>
+</html>

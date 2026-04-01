@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zen</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BACKGROUND */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: url("bg.jpg") no-repeat center center/cover;
+    overflow: hidden;
+}
+
+/* CENTER LOGO */
+.logo-container {
+    text-align: center;
+    cursor: pointer;
+
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* LOGO */
+.logo {
+    width: 120px;
+    transition: transform 0.4s ease;
+}
+
+/* TEXT */
+.brand {
+    margin-top: 10px;
+    font-size: 32px;
+    color: #5f6654;
+    font-family: cursive;
+}
+
+/* HOVER EFFECT */
+.logo-container:hover .logo {
+    transform: scale(1.1);
+}
+
+/* CLICK ANIMATION */
+.fade-out {
+    opacity: 0;
+    transform: scale(0.9);
+}
+</style>
+</head>
+
+<body>
+
+<div class="logo-container" onclick="goToLogin()">
+    <img src="logo.png" class="logo">
+    <div class="brand">Zen</div>
+</div>
+
+<script>
+function goToLogin() {
+    let container = document.querySelector(".logo-container");
+
+    // add animation
+    container.classList.add("fade-out");
+
+    // delay then redirect
+    setTimeout(() => {
+        window.location.href = "login_page.html";
+    }, 400);
+}
+</script>
+
+</body>
+</html>

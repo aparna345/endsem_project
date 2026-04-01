@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Meditation</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* BACKGROUND IMAGE (YOUR IMAGE) */
+body {
+  height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+    url("M.jpeg") no-repeat center/cover;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN BOX */
+.container {
+  width: 600px;
+  padding: 40px;
+  text-align: center;
+
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(25px);
+  border-radius: 25px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  color: white;
+}
+
+/* TITLE */
+h1 {
+  margin-bottom: 10px;
+}
+
+/* BREATHING CIRCLE */
+.circle {
+  width: 180px;
+  height: 180px;
+  margin: 30px auto;
+  border-radius: 50%;
+  background: rgba(255,255,255,-5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 100px;
+
+  transition: transform 4s ease-in-out;
+}
+
+/* ANIMATION */
+.grow {
+  transform: scale(1.6);
+}
+
+/* TEXT */
+#instruction {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+/* TIMER */
+.timer {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* BUTTONS */
+button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.start {
+  background: #00c9a7;
+  color: white;
+}
+
+.stop {
+  background: #ff6b6b;
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+  <h1>🧘 Meditation</h1>
+  <p>Relax and focus on your breath</p>
+
+  <div class="circle" id="circle">🌬</div>
+
+  <p id="instruction">Press Start</p>
+  <div class="timer" id="timer">0s</div>
+
+  <button class="start" onclick="startMeditation()">Start</button>
+  <button class="stop" onclick="stopMeditation()">Stop</button>
+
+</div>
+
+<script>
+let time = 0;
+let timerInterval;
+let isRunning = false;
+
+function startMeditation(){
+  if(isRunning) return;
+  isRunning = true;
+
+  let circle = document.getElementById("circle");
+  let instruction = document.getElementById("instruction");
+
+  // TIMER
+  timerInterval = setInterval(()=>{
+    time++;
+    document.getElementById("timer").innerText = time + "s";
+  },1000);
+
+  // BREATH LOOP
+  function breathe(){
+    if(!isRunning) return;
+
+    circle.classList.add("grow");
+    instruction.innerText = "Breathe In...";
+
+    setTimeout(()=>{
+      circle.classList.remove("grow");
+      instruction.innerText = "Breathe Out...";
+    },4000);
+
+    setTimeout(breathe,8000);
+  }
+
+  breathe();
+}
+
+function stopMeditation(){
+  isRunning = false;
+  clearInterval(timerInterval);
+
+  document.getElementById("instruction").innerText = "Stopped";
+}
+</script>
+
+</body>
+</html>
